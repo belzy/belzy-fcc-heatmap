@@ -54,8 +54,6 @@
         // Color Scale
         const scaleColor = d3.scaleQuantize();
         scaleColor.domain([minTemp, maxTemp]).range(colorsArr);
-        // scaleColor.domain([minTemp, maxTemp]).range(['#313695', '#A50026']);
-        // console.log(scaleColor(5));
 
         // Legend
         const legendWidth = 400;
@@ -143,9 +141,40 @@
             .attr('y', d => scaleY(d.month))
             .attr('width', d => scaleX.bandwidth())
             .attr('height', d => scaleY.bandwidth())
+            .attr('data-cell-number', (d, i) => i)
             .style('fill', d => scaleColor(baseTemp + d.variance))
             .on('mouseenter', (d, i) => {
-                // console.log(d)
+                
+                // rect.top, rect.right, rect.bottom, rect.left
+                const cellRect = document.querySelector(`[data-cell-number="${i}"]`).getBoundingClientRect();
+
+                const topOffset = 10;
+                const leftOffset = 0;
+
+                const tooltip = d3.select('#tooltip')
+                    .style('top', `${cellRect.top}px`)
+                    .style('left', `${cellRect.left}px`)
+                    .style('opacity', '0.7')
+                    .attr('data-year', dataset[i]['year'])
+
+                tooltip.select('#tooltip-date')
+                    .text(() => `${dataset[i]['year']} - ${monthNameArr[dataset[i]['month']]}`)
+
+                tooltip.select('#tooltip-temperature')
+                    .text(() => `${(baseTemp + dataset[i]['variance']).toFixed(1)}°C`)
+
+                tooltip.select('#tooltip-variance')
+                    .text(() => `${dataset[i]['variance'] > 0 ? '+' : ''}${dataset[i]['variance'].toFixed(1)}`)
+
+                const tooltipRect = document.querySelector('#tooltip').getBoundingClientRect();
+
+                tooltip.style('left', `${(cellRect.left + cellRect.width) - (tooltipRect.width / 2)}px`)
+                    .style('top', `${cellRect.top - tooltipRect.height - topOffset}px`)
+
+            })
+            .on('mouseout', (d, i) => {
+                const tooltip = d3.select('#tooltip')
+                    .style('opacity', '0.0')
             })
 
     });
