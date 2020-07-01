@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
     <head>
-        <title>Heat Map</title>
+        <title id='title'>Heat Map</title>
         <meta charset='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <link rel='stylesheet' type='text/css' href='./css/reset.css' />
@@ -12,19 +12,14 @@
 
     <body>
         <main>
-            <div id='svg-scatterplot-container' class='svg-scatterplot-container'>
+            <div id='svg-heatmap-container' class='svg-heatmap-container'>
                 <h1 class='main-heading'>Monthly Global Land-Surface Temperature</h1>
-                <h2 class='main-sub-heading'>1753 - 2015: base temperature 8.66℃</h2>
-                <svg id='svg-scatterplot-graph'></svg>
+                <h2 id='description' class='main-sub-heading'>1753 - 2015: base temperature 8.66℃</h2>
+                <svg id='svg-heatmap'></svg>
                 <div id='tooltip' class='tooltip'>
-                    <div>
-                        <p id='tooltip-rider'></p>
-                        <p id='tooltip-data'></p>
-                    </div>
-
-                    <div>
-                        <p id='tooltip-doping'></p>
-                    </div>
+                   <h3 id='tooltip-date'></h3>
+                   <h3 id='tooltip-temperature'></h3>
+                   <h3 id='tooltip-variance'></h3>
                 </div>
             </div>
         </main> 
